@@ -83,8 +83,10 @@ function Get-RedirectUrl {
 
 $temp_dir = "$env:TEMP\GlistVSCodeInstaller"
 $glistzbin_dir = "C:\dev\glist\zbin\glistzbin-win64"
+$glistengine_dir = "C:\dev\glist"
 $glistapps_dir = "C:\dev\glist\myglistapps"
 $glistplugins_dir = "C:\dev\glist\myglistplugins"
+$glistengine_url = "https://codeload.github.com/GlistEngine/GlistEngine/zip/refs/heads/main"
 $glistapp_url = "https://codeload.github.com/javertus/GlistApp-vscode/zip/refs/heads/main"
 $glist_clang_url = Get-RedirectUrl -url "https://github.com/javertus/glistzbin-win64-vscode/releases/download/Dependencies/clang64.zip"
 $glist_cmake_url = Get-RedirectUrl -url "https://github.com/javertus/glistzbin-win64-vscode/releases/download/Dependencies/CMake.zip"
@@ -100,6 +102,13 @@ New-Item -ItemType Directory -Path $temp_dir -Force -ErrorAction Inquire | Out-N
 
 Write-Host "Installing Glist Engine dependencies..."
 
+#Install Glist Engine
+Write-Host "Installing Engine"
+Start-BitsTransfer -Source $glistengine_url -Destination "$temp_dir\GlistEngine.zip" -ErrorAction Inquire
+Remove-Item -Path "$glistengine_dir\GlistEngine" -Recurse -Force -ErrorAction SilentlyContinue
+Extract-Archive -InputDir "$temp_dir\GlistEngine.zip" -OutputDir $glistengine_dir -Message "Engine Installed."
+Rename-Item -Path "$glistengine_dir\GlistEngine-main" -NewName "GlistEngine"
+
 #Install Clang
 Start-BitsTransfer -Source $glist_clang_url -Destination "$temp_dir\clang64.zip" -ErrorAction Inquire
 Remove-Item -Path "$glistzbin_dir\clang64" -Recurse -Force -ErrorAction SilentlyContinue
@@ -111,11 +120,11 @@ Remove-Item -Path "$glistzbin_dir\CMake" -Recurse -Force -ErrorAction SilentlyCo
 Extract-Archive -InputDir "$temp_dir\CMake.zip" -OutputDir $glistzbin_dir -Message "CMake Binaries Installed."
 
 #Create Empty GlistApp
-Write-Host "Creating Empty GlistApp..."
+Write-Host "Creating Empty GlistApp"
 Start-BitsTransfer -Source $glistapp_url -Destination "$temp_dir\GlistApp.zip" -ErrorAction Inquire
-Remove-Item -Path "$glistapps_dir\GlistApp" -Recurse -Force -ErrorAction SilentlyContinue
+Rename-Item -Path "$glistapps_dir\GlistApp" -NewName "GlistAppOld" -Force -ErrorAction SilentlyContinue
 Extract-Archive -InputDir "$temp_dir\GlistApp.zip" -OutputDir $glistapps_dir -Message "GlistApp Installed."
-Rename-Item -Path "$glistapps_dir\GlistApp-vscode-main" -NewName GlistApp
+Rename-Item -Path "$glistapps_dir\GlistApp-vscode-main" -NewName "GlistApp"
 
 # Check for VS Code installation
 $check_installation =  (Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*, HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* |  Where-Object {$_.DisplayName -like "*Visual Studio Code*"})
