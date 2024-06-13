@@ -86,8 +86,8 @@ $glistzbin_dir = "C:\dev\glist\zbin\glistzbin-win64"
 $glistengine_dir = "C:\dev\glist"
 $glistapps_dir = "C:\dev\glist\myglistapps"
 $glistplugins_dir = "C:\dev\glist\myglistplugins"
-$glistengine_url = "https://codeload.github.com/GlistEngine/GlistEngine/zip/refs/heads/main"
-$glistapp_url = "https://codeload.github.com/javertus/GlistApp-vscode/zip/refs/heads/main"
+$glistengine_url = Get-RedirectUrl -url "https://codeload.github.com/GlistEngine/GlistEngine/zip/refs/heads/main"
+$glistapp_url = Get-RedirectUrl -url "https://codeload.github.com/javertus/GlistApp-vscode/zip/refs/heads/main"
 $glist_clang_url = Get-RedirectUrl -url "https://github.com/javertus/glistzbin-win64-vscode/releases/download/Dependencies/clang64.zip"
 $glist_cmake_url = Get-RedirectUrl -url "https://github.com/javertus/glistzbin-win64-vscode/releases/download/Dependencies/CMake.zip"
 $vscode_installation_url = Get-RedirectUrl -url "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-archive"
@@ -110,11 +110,13 @@ Extract-Archive -InputDir "$temp_dir\GlistEngine.zip" -OutputDir $glistengine_di
 Rename-Item -Path "$glistengine_dir\GlistEngine-main" -NewName "GlistEngine"
 
 #Install Clang
+Write-Host "Installing Clang Binaries"
 Start-BitsTransfer -Source $glist_clang_url -Destination "$temp_dir\clang64.zip" -ErrorAction Inquire
 Remove-Item -Path "$glistzbin_dir\clang64" -Recurse -Force -ErrorAction SilentlyContinue
 Extract-Archive -InputDir "$temp_dir\clang64.zip" -OutputDir $glistzbin_dir -Message "Clang Binaries Installed."
 
 #Install CMake
+Write-Host "Installing Cmake"
 Start-BitsTransfer -Source $glist_cmake_url -Destination "$temp_dir\CMake.zip" -ErrorAction Inquire
 Remove-Item -Path "$glistzbin_dir\CMake" -Recurse -Force -ErrorAction SilentlyContinue
 Extract-Archive -InputDir "$temp_dir\CMake.zip" -OutputDir $glistzbin_dir -Message "CMake Binaries Installed."
