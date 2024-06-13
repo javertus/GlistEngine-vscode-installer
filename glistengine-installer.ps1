@@ -153,4 +153,13 @@ else {
     Start-Process -FilePath "$vscode_dir\bin\code" -ArgumentList "--install-extension $temp_dir\glistextension.vsix"
 }
 
+#Add cmake to system path
+$newPath = "C:\dev\glist\zbin\gliszbin-win64\CMake\bin"
+$currentPath = [Environment]::GetEnvironmentVariable("Path", "Machine")
+if ($currentPath -notlike "*$newPath*") {
+    # If the path doesn't exist, add it
+    $newPath = $currentPath + ";" + $newPath
+    [Environment]::SetEnvironmentVariable("Path", $newPath, "Machine")
+}
+
 Write-Host "Glist Engine installation complete! After launching VS Code, please wait until VS Code's first launch complete!!!"
