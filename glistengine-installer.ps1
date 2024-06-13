@@ -86,6 +86,7 @@ $glistzbin_dir = "C:\dev\glist\zbin\glistzbin-win64"
 $glistengine_dir = "C:\dev\glist"
 $glistapps_dir = "C:\dev\glist\myglistapps"
 $glistplugins_dir = "C:\dev\glist\myglistplugins"
+$vscode_dir = "$glistzbin_dir\Microsoft VS Code"
 $glistengine_url = Get-RedirectUrl -url "https://codeload.github.com/GlistEngine/GlistEngine/zip/refs/heads/main"
 $glistapp_url = Get-RedirectUrl -url "https://codeload.github.com/javertus/GlistApp-vscode/zip/refs/heads/main"
 $glist_clang_url = Get-RedirectUrl -url "https://github.com/javertus/glistzbin-win64-vscode/releases/download/Dependencies/clang64.zip"
@@ -142,7 +143,7 @@ if($check_installation) {
 }
 else {
     #Install VS Code
-    Write-Host "Visual Studio Code is not found. Installing Visual Studio Code to:" $vscode_location
+    Write-Host "Visual Studio Code is not found. Installing Visual Studio Code to:" $vscode_dir
     Start-BitsTransfer -Source $vscode_installation_url -Destination "$temp_dir\vscode.zip" -ErrorAction Inquire
     Remove-Item -Path $vscode_dir -Recurse -Force -ErrorAction SilentlyContinue
     New-Item -ItemType Directory -Path $vscode_dir -Force -ErrorAction Inquire | Out-Null
