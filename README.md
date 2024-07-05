@@ -1,2 +1,2 @@
 # glistengine-vscode-installer-script
- Glist Engine Installer with VS Code.
+ [Glist Engine](https://github.com/GlistEngine/GlistEngine) Installer with VS Code.
