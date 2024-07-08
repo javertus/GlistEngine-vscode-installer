@@ -92,7 +92,7 @@ $glistapp_url = Get-RedirectUrl -url "https://codeload.github.com/javertus/Glist
 $glist_clang_url = Get-RedirectUrl -url "https://github.com/javertus/glistzbin-win64-vscode/releases/download/Dependencies/clang64.zip"
 $glist_cmake_url = Get-RedirectUrl -url "https://github.com/javertus/glistzbin-win64-vscode/releases/download/Dependencies/CMake.zip"
 $vscode_installation_url = Get-RedirectUrl -url "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-archive"
-$vscode_extension_url = "https://github.com/javertus/GlistEngine-vscode-extension/releases/download/1.0.0/glist-engine-extension-1.0.0.vsix"
+$vscode_extension_url = "https://github.com/javertus/GlistEngine-vscode-extension/releases/download/1.2.7/glist-engine-extension-1.2.7.vsix"
 
 #Create glistplugins dir
 New-Item -ItemType Directory -Path $glistplugins_dir -Force -ErrorAction Inquire | Out-Null
